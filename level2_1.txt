@@ -1,0 +1,75 @@
+def solution(pegs):
+    peg_l = len(pegs)
+    if(peg_l == 2):
+        num = pegs[1] - pegs[0]
+        if (num % 3 == 0):
+            return([(num)*2/3,1])
+        else:
+            #return ([-1,-1])
+            if ((num) > 3):
+                return([(num)*2,3])
+            else:
+                return ([-1,-1])
+    else:
+        diff_list = []
+        for i in range(1,peg_l):
+            diff_list.append(pegs[i] - pegs[i-1])
+        diff_sum = sum(diff_list)
+        extra = 0
+        if(peg_l % 2 == 0):
+            for i in range(peg_l - 1):
+                if (i % 2 != 0):
+                    extra += diff_list[i]
+            extra *= 2
+            if(extra >= diff_sum):
+                return ([-1,-1])
+            else:
+                num = (diff_sum - extra)
+                if(num % 3 == 0):
+                    curr_rad = num*2/3
+                    for i in range(1,peg_l - 2):
+                        distance = pegs[i] - pegs[i-1]
+                        new_rad  = distance - curr_rad
+                        if(new_rad < 1 or curr_rad < 1):
+                            return ([-1,-1])
+                        else:
+                            curr_rad = new_rad
+                    return ([num*2/3,1])
+                else:
+                    #return ([-1,-1])
+                    if(num > 3):
+                        curr_rad = num*2/3
+                        for i in range(1,peg_l - 2):
+                            distance = pegs[i] - pegs[i-1]
+                            new_rad  = distance - curr_rad
+                            if(new_rad < 1 or curr_rad < 1):
+                                return ([-1,-1])
+                            else:
+                                curr_rad = new_rad
+                        return ([num*2,3])
+                    else:
+                        return ([-1,-1])
+        
+        else:
+            for i in range(peg_l - 1):
+                if (i % 2 != 0):
+                    extra += diff_list[i]
+            extra *= 2
+            if(extra >= diff_sum):
+                return ([-1,-1])
+            else:
+                num = (diff_sum - extra)
+                if (num > 1):
+                    curr_rad = num*2
+                    for i in range(1,peg_l - 2):
+                        distance = pegs[i] - pegs[i-1]
+                        new_rad  = distance - curr_rad
+                        if(new_rad < 1 or curr_rad < 1):
+                            return ([-1,-1])
+                        else:
+                            curr_rad = new_rad
+                    return ([num*2,1])
+                else:
+                    return ([-1,-1])
+l = solution([4,30,50])
+print(l)
